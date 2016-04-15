@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sun-jndi-ldapbp">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../sharelib/sun-jndi-ldapbp.jar/sun-jndi-ldapbp.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

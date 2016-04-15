@@ -1,0 +1,21 @@
+密钥用法：
+数字签名 Digital Signature
+认可签名 Non Repudiation
+密钥加密 key Encipherment
+数据加密 Data Encipherment
+密钥协商 key Agreement
+证书签名 Key CertSign
+CRL 签名 Crl Sign
+仅仅加密 Encipher Only
+仅仅解密 Decipher Only
+
+OpenSSL密钥用法：
+数字签名 digitalSignature
+认可签名 nonRepudiation
+密钥加密 keyEncipherment
+数据加密 dataEncipherment
+密钥协商 keyAgreement
+证书签名 keyCertSign
+CRL 签名 cRLSign
+仅仅加密 encipherOnly
+仅仅解密 decipherOnly

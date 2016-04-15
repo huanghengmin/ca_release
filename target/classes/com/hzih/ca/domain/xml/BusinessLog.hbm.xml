@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class table="business_log" name="com.hzih.ca.domain.BusinessLog">
+        <id access="field" name="id" type="java.lang.Long" column="Id">
+            <generator class="identity"/>
+        </id>
+        <property name="businessType" column="business_type" access="field" type="java.lang.String"/>
+        <property name="logTime" column="log_time" access="field" type="java.util.Date"/>
+        <property name="level" column="level" access="field" type="java.lang.String"/>
+        <property name="businessName" column="business_name" access="field" type="java.lang.String"/>
+        <property name="businessDesc" column="business_desc" access="field" type="java.lang.String"/>
+        <property name="auditCount" column="audit_count" access="field" type="java.lang.Integer"/>
+        <property name="flag" column="flag" access="field" type="java.lang.Integer"/>
+        <property name="sourceIp" column="source_ip" access="field" type="java.lang.String"/>
+        <property name="sourcePort" column="source_port" access="field" type="java.lang.String"/>
+        <property name="destIp" column="dest_ip" access="field" type="java.lang.String"/>
+        <property name="destPort" column="dest_port" access="field" type="java.lang.String"/>
+        <property name="sourceJdbc" column="source_jdbc" access="field" type="java.lang.String"/>
+        <property name="destJdbc" column="dest_jdbc" access="field" type="java.lang.String"/>
+        <property name="fileName" column="file_name" access="field" type="java.lang.String"/>
+        <property name="jsonId" column="json_id" access="field" type="java.lang.Integer"/>
+        <property name="plugin" column="plugin" access="field" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,136 @@
+.ext-strict .ext-ie6 .x-layout-split {
+	BACKGROUND-COLOR: #dfe8f6
+}
+.add {
+	BACKGROUND-IMAGE: url(../img/icon/add.gif)! important
+}
+.delete {
+	BACKGROUND-IMAGE: url(../img/icon/delete.gif)! important
+}
+.remove {
+	BACKGROUND-IMAGE: url(../img/icon/delete.gif)! important
+}
+.help {
+	BACKGROUND-IMAGE: url(../img/icon/help.png)! important
+}
+.refresh {
+	BACKGROUND-IMAGE: url(../js/ext/resources/images/default/grid/refresh.gif)! important
+}
+.bjgl {
+	BACKGROUND-IMAGE: url(../img/icon/bjgl.png)! important
+}
+.jlsb {
+	BACKGROUND-IMAGE: url(../img/icon/jlsb.png)! important
+}
+.pzgl {
+	BACKGROUND-IMAGE: url(../img/icon/pzgl.png)! important
+}
+.sjgl {
+	BACKGROUND-IMAGE: url(../img/icon/sjgl.png)! important
+}
+.tjbb {
+	BACKGROUND-IMAGE: url(../img/icon/tjbb.png)! important
+}
+.user {
+	BACKGROUND-IMAGE: url(../img/icon/user.png)! important
+}
+.yxjg {
+	BACKGROUND-IMAGE: url(../img/icon/yxjg.png)! important
+}
+.yygl {
+	BACKGROUND-IMAGE: url(../img/icon/yygl.png)! important
+}
+.ptgl {
+	BACKGROUND-IMAGE: url(../img/icon/ptgl.png)! important
+}
+.xtgl {
+	BACKGROUND-IMAGE: url(../img/icon/xtgl.png)! important
+}
+.sjygl {
+	BACKGROUND-IMAGE: url(../img/icon/sjygl.png)! important
+}
+.wlgl {
+	BACKGROUND-IMAGE: url(../img/icon/wlgl.png)! important
+}
+.select{
+    BACKGROUND-IMAGE: url(../img/icon/select.gif)! important
+}
+.replace{
+    BACKGROUND-IMAGE: url(../img/icon/replace.gif)! important
+}
+.config{
+    BACKGROUND-IMAGE: url(../img/icon/config.gif)! important
+}
+.save{
+    BACKGROUND-IMAGE: url(../img/icon/save.gif)! important
+}
+.help2{
+    BACKGROUND-IMAGE: url(../img/icon/help2.gif)! important
+}
+.system{
+    BACKGROUND-IMAGE: url(../img/icon/system.png)! important
+}
+.ca{
+    BACKGROUND-IMAGE: url(../img/icon/ca.gif)! important
+}
+.audit{
+    BACKGROUND-IMAGE: url(../img/icon/audituser.png)! important
+}
+.cacert{
+    BACKGROUND-IMAGE: url(../img/icon/cacert.gif)! important
+}
+.usercert{
+    BACKGROUND-IMAGE: url(../img/icon/user.gif)! important
+}
+.servercert{
+    BACKGROUND-IMAGE: url(../img/icon/server.png)! important
+}
+.setting{
+    BACKGROUND-IMAGE: url(../img/icon/setting.png)! important
+}
+.download{
+    BACKGROUND-IMAGE: url(../img/icon/download.gif)! important
+}
+.removeall {
+    BACKGROUND-IMAGE: url(../img/icon/removeall.png)! important
+}
+.ca {
+    BACKGROUND-IMAGE: url(../img/ca/ca.png)! important
+}
+.user_add {
+    BACKGROUND-IMAGE: url(../img/ca/user_add.png)! important
+}
+.user_del {
+    BACKGROUND-IMAGE: url(../img/ca/user_delete.png)! important
+}
+.user_import {
+    BACKGROUND-IMAGE: url(../img/ca/user_import.png)! important
+}
+.blueuser {
+    BACKGROUND-IMAGE: url(../img/ca/blackuser.png)! important
+}
+.boyuser {
+    BACKGROUND-IMAGE: url(../img/ca/boyuser.png)! important
+}
+.blackuser {
+    BACKGROUND-IMAGE: url(../img/ca/blackuser.png)! important
+}
+.user {
+    BACKGROUND-IMAGE: url(../img/ca/blueuser.png)! important
+}
+.ssl {
+    BACKGROUND-IMAGE: url(../img/ca/ssl.png)! important
+}
+.server_add {
+    BACKGROUND-IMAGE: url(../img/ca/server_add.png)! important
+}
+.server_delete {
+    BACKGROUND-IMAGE: url(../img/ca/server_delete.png)! important
+}
+.device {
+     BACKGROUND-IMAGE: url(../img/ca/server.png)! important
+ }
+.monitor {
+    BACKGROUND-IMAGE: url(../img/icon/monitor.png)! important
+}
+

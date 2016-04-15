@@ -1,0 +1,1 @@
+1.部署到tomcat下,在../conf/context.xml中的<Context>标签中添加或修改 <Resource/>如下:

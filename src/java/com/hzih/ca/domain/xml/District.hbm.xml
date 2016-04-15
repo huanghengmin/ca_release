@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class table="district" name="com.hzih.ca.domain.District" >
+      <id access="field" name="id" type="long" column="district_id" length="11">
+          <generator class="identity" />
+      </id>
+    <property name="districtName" length="80" column="district_name" access="field" type="string"/>
+  </class>
+</hibernate-mapping>

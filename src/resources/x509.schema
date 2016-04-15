@@ -1,0 +1,128 @@
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.1 NAME 'orgCode'
+        DESC 'X509 CA orgcode'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)        
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.2 NAME 'pwd'
+        DESC 'X509 CA private key pwd'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.3 NAME 'certStatus'
+        DESC 'X509 CA certstatus'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.4 NAME 'serial'
+        DESC 'X509 CA serial'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.5 NAME 'key'
+        DESC 'X509 CA key'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.6 NAME 'createDate'
+        DESC 'X509 CA createDate'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.7 NAME 'endDate'
+        DESC 'X509 CA endDate'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.8 NAME 'issueCa'
+        DESC 'X509 CA issueCa'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.9 NAME 'certType'
+        DESC 'X509 CA certType'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.10 NAME 'keyLength'
+        DESC 'X509 CA keyLength'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.11 NAME 'validity'
+        DESC 'X509 CA validity'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)            
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.12 NAME 'province'
+        DESC 'X509 CA province'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)             
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.13 NAME 'city'
+        DESC 'X509 CA city'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+         SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.14 NAME 'organization'
+        DESC 'X509 CA organization'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)      
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.15 NAME 'institution'
+        DESC 'X509 CA institution'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)           
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.16 NAME 'idCard'
+        DESC 'X509 User idCard'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)           
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.17 NAME 'phone'
+        DESC 'X509 User phone'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)           
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.18 NAME 'address'
+        DESC 'X509 User address'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)     
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.19 NAME 'userEmail'
+        DESC 'X509 User userEmail'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)        
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.20 NAME 'employeeCode'
+        DESC 'X509 User employeeCode'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)  
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.21 NAME 'serverIp'
+        DESC 'X509 Server employeeCode'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.22 NAME 'desc'
+        DESC 'X509 Ca desc'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+attributetype ( 1.3.6.1.4.1.7.1.2.1.1.1.1.23 NAME 'certBase64Code'
+        DESC 'X509 Ca certBase64Code'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32768} SINGLE-value)
+objectclass ( 1.3.6.1.4.1.7.1.2.1.1.1.0 NAME 'X509Ca'
+	 SUP top STRUCTURAL
+	 DESC 'X509 Ca object class'
+	 MUST (cn)
+         MAY( orgCode $ pwd  $ certStatus $ serial $ key $ createDate $ endDate $ issueCa $ certType $ keyLength $ validity $ authorityRevocationList $ CertificateRevocationList $ cACertificate $ crossCertificatePair $ province $ city $ organization $ institution $ desc $ certBase64Code ))	
+objectclass ( 1.3.6.1.4.1.7.1.2.1.1.1.1 NAME 'X509Server'
+	 SUP X509Ca				
+   	 DESC 'X509 Server object class'
+	 MAY (serverIp $ userCertificate))
+objectclass ( 1.3.6.1.4.1.7.1.2.1.1.1.2 NAME 'X509User'
+	 SUP X509Ca		   
+         DESC 'X509 User object class'
+	 MAY  ( idCard $ phone $ address $ userEmail $ employeeCode $ userCertificate))

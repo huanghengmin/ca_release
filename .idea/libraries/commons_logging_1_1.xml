@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="commons-logging-1.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../sharelib/poi-bin-3.2-FINAL-20081019/poi-3.2-FINAL/lib/commons-logging-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../sharelib/poi-bin-3.2-FINAL-20081019/poi-3.2-FINAL/lib/log4j-1.2.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../sharelib/poi-bin-3.2-FINAL-20081019/poi-3.2-FINAL/lib/junit-3.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../sharelib/poi-bin-3.2-FINAL-20081019/poi-3.2-FINAL/poi-3.2-FINAL-20081019.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../sharelib/poi-bin-3.2-FINAL-20081019/poi-3.2-FINAL/poi-contrib-3.2-FINAL-20081019.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../sharelib/poi-bin-3.2-FINAL-20081019/poi-3.2-FINAL/poi-scratchpad-3.2-FINAL-20081019.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,34 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="ca">
+    <output-path>E:/fartec/ichange/ca/tomcat/webapps/ROOT</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ca" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="ca" />
+          <element id="library" level="project" name="jndi" />
+          <element id="library" level="project" name="jxl" />
+          <element id="library" level="project" name="syslog4j-0.9.46" />
+          <element id="library" level="project" name="jdom" />
+          <element id="library" level="project" name="poi-3.2-FINAL-20081019" />
+          <element id="library" level="project" name="shared" />
+          <element id="library" level="project" name="sun-jndi-ldapbp" />
+          <element id="library" level="project" name="commons-logging-1.1" />
+          <element id="library" level="project" name="ganymed-ssh2-build210" />
+          <element id="library" level="project" name="commons-exec" />
+          <element id="library" level="project" name="junit-4.10" />
+          <element id="library" level="project" name="snmp4j-2.0.1" />
+          <element id="library" level="project" name="ant" />
+          <element id="library" level="project" name="commons-compress-1.8.1" />
+          <element id="library" level="project" name="bcprov-jdk16-141" />
+          <element id="library" level="project" name="mina-core-2.0.7" />
+        </element>
+        <element id="file-copy" path="$PROJECT_DIR$/src/resources/spring.xml" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/resources/struts.xml" />
+      </element>
+      <element id="javaee-facet-resources" facet="ca/web/appserver" />
+    </root>
+  </artifact>
+</component>

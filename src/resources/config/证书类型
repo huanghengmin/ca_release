@@ -1,0 +1,74 @@
+证书类型
+OpenSSL密钥用法：                                      OpenSSL 增强密钥用法:
+
+keyUsage=digitalSignature, nonRepudiation             extendedKeyUsage=critical,codeSigning,1.2.3.4
+keyUsage=critical, keyCertSign                        extendedKeyUsage=nsSGC,msSGC
+
+数字签名 digitalSignature                              serverAuth             SSL / TLS Web服务器身份验证
+认可签名 nonRepudiation                                clientAuth             SSL / TLS Web客户端身份验证
+密钥加密 keyEncipherment                               codeSigning            代码签名
+数据加密 dataEncipherment                              emailProtection        安全电子邮件 (S/MIME).
+密钥协商 keyAgreement                                  timeStamping           时间戳
+证书签名 keyCertSign                                   msCodeInd              Microsoft 个人代码签名 (authenticode)
+CRL 签名 cRLSign                                       msCodeCom              Microsoft 商业代码签名 (authenticode)
+仅仅加密 encipherOnly                                  msCTLSign              Microsoft 信任列表签名
+仅仅解密 decipherOnly                                  msSGC                  Microsoft Server Gated Crypto
+                                                       msEFS                  Microsoft 加密文件系统
+                                                       nsSGC                  Netscape Server Gated Crypto
+(1)根证书
+密钥用法：认可签名，证书签名，CRL签名
+keyUsage=nonRepudiation, keyCertSign,cRLSign
+
+(2)代码签名
+密钥用法：数字签名
+增强密钥用法：代码签名
+keyUsage=digitalSignature
+extendedKeyUsage=codeSigning
+
+(3)计算机
+密钥用法：数字签名，密钥协商
+增强密钥用法：服务器验证，客户端验证
+keyUsage=digitalSignature,keyAgreement
+extendedKeyUsage=serverAuth,clientAuth
+
+(4)WEB服务器
+密钥用法：数字签名，认可签名，密钥加密，数据加密，密钥协商
+增强密钥用法：服务器验证
+keyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement
+extendedKeyUsage=serverAuth
+
+(5)客户端
+密钥用法：数字签名，认可签名，密钥加密，数据加密
+增强密钥用法：客户端验证
+keyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+extendedKeyUsage=clientAuth
+
+(6)信任列表签名
+密钥用法：数字签名
+增强密钥用法：信任列表签名
+keyUsage=digitalSignature
+extendedKeyUsage=msCTLSign
+
+(7)时间戳
+密钥用法：数字签名，认可签名，密钥加密，数据加密
+增强密钥用法：时间戳
+keyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+extendedKeyUsage=timeStamping
+
+(8)IPSEC
+密钥用法：数字签名，认可签名，密钥加密，数据加密
+增强密钥用法：IP安全IKE中级
+keyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+extendedKeyUsage=1.3.6.1.5.5.8.2.2
+
+(9)安全Email
+密钥用法：数字签名，认可签名，密钥加密，数据加密
+增强密钥用法：安全电子邮件
+keyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+extendedKeyUsage=emailProtection
+
+(10)智能卡登陆
+密钥用法：数字签名，密钥协商，仅仅解密
+增强密钥用法：密钥恢复，加密文件系统，智能卡登陆
+keyUsage=digitalSignature,keyAgreement,decipherOnly
+extendedKeyUsage=1.3.6.1.4.1.311.10.3.11,msEFS,1.3.6.1.4.1.311.20.2.2

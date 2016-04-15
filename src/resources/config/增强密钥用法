@@ -1,0 +1,45 @@
+增强密钥用法：                                                                                 OpenSSL 增强密钥用法:
+
+                                                                                               extendedKeyUsage=critical,codeSigning,1.2.3.4
+                                                                                               extendedKeyUsage=nsSGC,msSGC
+
+Microsoft 信任列表签名 (1.3.6.1.4.1.311.10.3.1)      Microsoft Trust List Signing,             msCTLSign              Microsoft Trust List Signing
+合格的部属 (1.3.6.1.4.1.311.10.3.10)                 1.3.6.1.4.1.311.10.3.10,
+密钥恢复 (1.3.6.1.4.1.311.10.3.11)                   1.3.6.1.4.1.311.10.3.11,
+许可证服务器确认 (1.3.6.1.4.1.311.10.6.2)            1.3.6.1.4.1.311.10.6.2,
+生存时间签名 (1.3.6.1.4.1.311.10.3.13)               1.3.6.1.4.1.311.10.3.13,
+Microsoft 时间戳 (1.3.6.1.4.1.311.10.3.2)            1.3.6.1.4.1.311.10.3.2,
+加密文件系统 (1.3.6.1.4.1.311.10.3.4)                Microsoft Encrypted File System,          msEFS                  Microsoft Encrypted File System
+文件恢复 (1.3.6.1.4.1.311.10.3.4.1)                  1.3.6.1.4.1.311.10.3.4.1,
+根列表签名者 (1.3.6.1.4.1.311.10.3.9)                1.3.6.1.4.1.311.10.3.9,
+数字权利 (1.3.6.1.4.1.311.10.5.1)                    1.3.6.1.4.1.311.10.5.1,
+密钥数据包许可证 (1.3.6.1.4.1.311.10.6.1)            1.3.6.1.4.1.311.10.6.1,
+文档签名 (1.3.6.1.4.1.311.10.3.12)                   1.3.6.1.4.1.311.10.3.12,
+证书申请代理 (1.3.6.1.4.1.311.20.2.1)                1.3.6.1.4.1.311.20.2.1,
+智能卡登录 (1.3.6.1.4.1.311.20.2.2)                  Microsoft Smartcardlogin,
+私钥存档 (1.3.6.1.4.1.311.21.5)                      1.3.6.1.4.1.311.21.5,
+Windows 硬件驱动程序验证 (1.3.6.1.4.1.311.10.3.5)    1.3.6.1.4.1.311.10.3.5,
+密钥恢复代理 (1.3.6.1.4.1.311.21.6)                  1.3.6.1.4.1.311.21.6,
+代码签名 (1.3.6.1.5.5.7.3.3)                         Code Signing,                              codeSigning            Code signing.
+时间戳 (1.3.6.1.5.5.7.3.8)                           Time Stamping,                             timeStamping           Trusted Timestamping
+客户端身份验证 (1.3.6.1.5.5.7.3.2)                   TLS Web Client Authentication,             clientAuth             SSL/TLS Web Client Authentication.
+安全电子邮件 (1.3.6.1.5.5.7.3.4)                     E-mail Protection,                         emailProtection        E-mail Protection (S/MIME).
+服务器身份验证 (1.3.6.1.5.5.7.3.1)                   TLS Web Server Authentication,             serverAuth             SSL/TLS Web Server Authentication.
+IP 安全用户 (1.3.6.1.5.5.7.3.7)                      IPSec User,
+IP 安全 IKE 中级 (1.3.6.1.5.5.8.2.2)                 1.3.6.1.5.5.8.2.2,
+OEM Windows 系统组件验证 (1.3.6.1.4.1.311.10.3.7)    1.3.6.1.4.1.311.10.3.7,
+IP 安全终端系统 (1.3.6.1.5.5.7.3.5)                  IPSec End System,
+IP 安全隧道终止 (1.3.6.1.5.5.7.3.6)                  IPSec Tunnel,
+目录服务电子邮件复制 (1.3.6.1.4.1.311.21.19)         1.3.6.1.4.1.311.21.19,
+内嵌 Windows 系统组件验证 (1.3.6.1.4.1.311.10.3.8)   1.3.6.1.4.1.311.10.3.8,
+Windows 系统组件验证 (1.3.6.1.4.1.311.10.3.6)        1.3.6.1.4.1.311.10.3.6,
+所有颁发的策略 (2.5.29.32.0)                         X509v3 Any Policy
+                                                                                                 msCodeInd              Microsoft Individual Code Signing (authenticode)
+                                                                                                 msCodeCom              Microsoft Commercial Code Signing (authenticode)
+                                                                                                 msSGC                  Microsoft Server Gated Crypto
+                                                                                                 nsSGC                  Netscape Server Gated Crypto
+
+
+
+
+
