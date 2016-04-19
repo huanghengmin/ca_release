@@ -13,9 +13,15 @@ import com.hzih.ca.web.action.ActionBase;
 import com.hzih.ca.web.action.ca.X509CaXML;
 import com.hzih.ca.web.action.ldap.DNUtils;
 import com.hzih.ca.web.action.ldap.LdapUtils;
+import com.hzih.ca.web.action.ldap.LdapXMLUtils;
 import com.hzih.ca.web.action.lisence.LicenseXML;
 import com.hzih.ca.web.utils.*;
 import com.opensymphony.xwork2.ActionSupport;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -31,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
@@ -111,6 +118,30 @@ public class X509UserBatchImport extends ActionSupport {
             json = "{success:true}";
         } else {
             logger.info("下载批量导入用户模板文件失败，文件不存在!");
+        }
+        actionBase.actionEnd(response, json, result);
+        return null;
+    }
+
+    public String downloadExportUser() throws Exception {
+        HttpServletRequest request = ServletActionContext.getRequest();
+        HttpServletResponse response = ServletActionContext.getResponse();
+        ActionBase actionBase = new ActionBase();
+        String result = actionBase.actionBegin(request);
+        String json = "{success:false}";
+        String Agent = request.getHeader("User-Agent");
+        StringTokenizer st = new StringTokenizer(Agent, ";");
+        st.nextToken();
+        /*得到用户的浏览器名  MS IE  Firefox*/
+        String userBrowser = st.nextToken();
+        File file = new File(StringContext.systemPath + "/model/ExportUser.xls");
+        if (file.exists()) {
+            FileUtil.downType(response, file.getName(), userBrowser);
+            response = FileUtil.copy(file, response);
+            json = "{success:true}";
+            logger.info("下载用户Excel数据成功！");
+        } else {
+            logger.info("下载用户Excel数据失败，文件不存在！");
         }
         actionBase.actionEnd(response, json, result);
         return null;
@@ -232,6 +263,40 @@ public class X509UserBatchImport extends ActionSupport {
             logger.info("批量导入用户失败::" + msg,e);
             logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ImportUser", "导入用户失败!" + msg);
         } finally {
+            LdapUtils.close(context);
+        }
+        actionBase.actionEnd(response, json, result);
+        return null;
+    }
+
+    public String batchExportUser() throws Exception {
+        HttpServletResponse response = ServletActionContext.getResponse();
+        HttpServletRequest request = ServletActionContext.getRequest();
+        ActionBase actionBase = new ActionBase();
+        String result = actionBase.actionBegin(request);
+        DirContext context = ldapUtils.getCtx();
+        String msg = null;
+        String json = null;
+        try {
+            String file = StringContext.systemPath+"/model/ExportUser.xls";
+            boolean flag = load(file,context);
+            if(flag){
+                msg = "导出用户数据到服务器完成"+new Date();
+                json = "{success:true,flag:true,msg:'" + msg + "'}";
+                logger.info("导出用户数据到服务器完成"+new Date());
+                logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ExportUser", "导出用户!");
+            }else {
+                msg = "导出用户数据到服务器失败"+new Date();
+                json = "{success:false,flag:false,msg:'" + msg + "'}";
+                logger.info("导出用户数据到服务器失败"+new Date());
+                logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ExportUser", "导出用户!");
+            }
+        }catch (Exception e){
+            msg = "导出用户数据到服务器失败"+new Date();
+            json = "{success:false,flag:false,msg:'" + msg + "'}";
+            logger.info("导出用户数据到服务器失败"+new Date());
+            logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ExportUser", "导出用户!");
+        }finally {
             LdapUtils.close(context);
         }
         actionBase.actionEnd(response, json, result);
@@ -702,6 +767,133 @@ public class X509UserBatchImport extends ActionSupport {
             logger.info("管理员" + admin_ + ",操作时间:" + new Date() + ",操作信息:" + msg);
             SysLogSend.sysLog("管理员" + admin_ + ",操作时间:" + new Date() + ",操作信息:" + msg);
             logService.newLog("INFO", admin_, "用户证书", msg);
+            return false;
+        }
+    }
+
+    private List<SearchResult> getAllResultListData(DirContext context) throws NamingException {
+        List<SearchResult> resultList = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder("(&(objectClass=" + X509User.getObjAttr() + ")");
+        stringBuilder.append(")");
+        String[] attrs = new String[]{
+                "cn",
+                "idCard",
+                "phone",
+                "address",
+                "userEmail",
+                "employeeCode",
+                "province",
+                "city",
+                "organization",
+                "institution"
+        };
+        SearchControls sc = new SearchControls();
+        sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+        sc.setReturningAttributes(attrs);
+        NamingEnumeration results = context.search(LdapXMLUtils.getValue(LdapXMLUtils.base), stringBuilder.toString(), sc);
+        while (results.hasMore()) {
+            SearchResult sr = (SearchResult) results.next();
+            resultList.add(sr);
+        }
+        return resultList;
+    }
+
+    public boolean load(String file, DirContext context) throws IOException, WriteException {
+
+        try {
+            FileOutputStream output = new FileOutputStream(file);
+            WritableWorkbook wk= Workbook.createWorkbook(output);
+            // 创建工作表
+            WritableSheet ws = wk.createSheet("用户信息", 0);
+            //查询数据库中所有的数据
+            List<SearchResult> list = getAllResultListData(context);
+            //要插入到的Excel表格的行号，默认从0开始
+            Label label_cn= new Label(0, 0, "用户名");//表示第
+            Label label_idCard= new Label(1, 0, "身份证");
+            Label label_phone= new Label(2, 0, "电话");
+            Label label_address= new Label(3, 0, "地址");
+            Label label_userEmail= new Label(4, 0, "邮件");
+            Label label_employeeCode= new Label(5, 0, "警员编号");
+            Label label_province = new Label(6, 0 , "省");
+            Label label_city = new Label(7, 0 , "市");
+            Label label_organization = new Label(8, 0 , "组织");
+            Label label_institution = new Label(9, 0 , "机构");
+
+            ws.addCell(label_cn);
+            ws.addCell(label_idCard);
+            ws.addCell(label_phone);
+            ws.addCell(label_address);
+            ws.addCell(label_userEmail);
+            ws.addCell(label_employeeCode);
+            ws.addCell(label_province);
+            ws.addCell(label_city);
+            ws.addCell(label_organization);
+            ws.addCell(label_institution);
+
+            for (int i = 0; i < list.size(); i++) {
+                SearchResult result = list.get(i);
+                Attributes attr = result.getAttributes();
+                X509User x509User = new X509User();
+                x509User.setCn((String) attr.get(X509User.getCnAttr()).get());
+                if (attr.get(X509User.getIdCardAttr()) != null) {
+                    x509User.setIdCard((String) attr.get(X509User.getIdCardAttr()).get());
+                }
+                if (attr.get(X509User.getPhoneAttr()) != null) {
+                    x509User.setPhone((String) attr.get(X509User.getPhoneAttr()).get());
+                }
+                if (attr.get(X509User.getAddressAttr()) != null) {
+                    x509User.setAddress((String) attr.get(X509User.getAddressAttr()).get());
+                }
+                if (attr.get(X509User.getUserEmailAttr()) != null) {
+                    x509User.setUserEmail((String) attr.get(X509User.getUserEmailAttr()).get());
+                }
+                if (attr.get(X509User.getEmployeeCodeAttr()) != null) {
+                    x509User.setEmployeeCode((String) attr.get(X509User.getEmployeeCodeAttr()).get());
+                }
+                if (attr.get(x509User.getProvinceAttr()) != null) {
+                    x509User.setProvince((String)attr.get(x509User.getProvinceAttr()).get());
+                }
+                if (attr.get(x509User.getCityAttr()) != null) {
+                    x509User.setCity((String)attr.get(x509User.getCityAttr()).get());
+                }
+                if (attr.get(x509User.getOrganizationAttr()) != null) {
+                    x509User.setOrganization((String)attr.get(x509User.getOrganizationAttr()).get());
+                }
+                if (attr.get(x509User.getInstitutionAttr()) != null) {
+                    x509User.setInstitution((String)attr.get(x509User.getInstitutionAttr()).get());
+                }
+
+                Label label_cn_i= new Label(0 , i+1,x509User.getCn());
+                Label label_idCard_i= new Label(1, i+1, x509User.getIdCard());
+                Label label_phone_i= new Label(2, i+1, x509User.getPhone());
+                Label label_address_i= new Label(3, i+1,x509User.getAddress());
+                Label label_userEmail_i= new Label(4, i+1, x509User.getUserEmail());
+                Label label_employeeCode_i= new Label(5, i+1, x509User.getEmployeeCode());
+                Label label_province_i= new Label(6, i+1, x509User.getProvince());
+                Label label_city_i= new Label(7, i+1, x509User.getCity());
+                Label label_organization_i= new Label(8, i+1, x509User.getOrganization());
+                Label label_institution_i= new Label(9, i+1, x509User.getInstitution());
+
+                ws.addCell(label_cn_i);
+                ws.addCell(label_idCard_i);
+                ws.addCell(label_phone_i);
+                ws.addCell(label_address_i);
+                ws.addCell(label_userEmail_i);
+                ws.addCell(label_employeeCode_i);
+                ws.addCell(label_province_i);
+                ws.addCell(label_city_i);
+                ws.addCell(label_organization_i);
+                ws.addCell(label_institution_i);
+            }
+            //写进文档
+            wk.write();
+            // 关闭Excel工作簿对象
+            wk.close();
+
+            output.close();
+            return true;
+        } catch (NamingException e) {
+            logger.error(e);
             return false;
         }
     }

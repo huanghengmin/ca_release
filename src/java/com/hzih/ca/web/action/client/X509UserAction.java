@@ -125,14 +125,42 @@ public class X509UserAction extends ActionSupport {
         }
         LdapUtils ldapUtils = new LdapUtils();
         DirContext context = ldapUtils.getCtx();
-        ModificationItem modificationItem[] = new ModificationItem[1];
-        modificationItem[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute(X509User.getDescAttr(), type));
-        try {
-            context.modifyAttributes(dn, modificationItem);
-            json = "{success:true,dn:'" + dn + "'}";
-        } catch (NamingException e) {
-            logger.error(e.getMessage(), e);
+        String[] attrs = new String[]{
+                "certType"
+        };
+        SearchControls sc = new SearchControls();
+        sc.setSearchScope(SearchControls.OBJECT_SCOPE);
+        sc.setReturningAttributes(attrs);
+        NamingEnumeration results = null;
+        String filter = "(objectclass=*)";
+        results = context.search(dn, filter, sc);
+        if (results.hasMore()) {
+            SearchResult sr = (SearchResult) results.next();
+            Attributes attr = sr.getAttributes();
+            if (attr.get(X509User.getCertTypeAttr()) != null) {
+                String certType = X509User.getCertTypeAttr();
+                if (!certType.equals(type)) {
+                    type = "TFCard和USBKey";
+                    ModificationItem modificationItem[] = new ModificationItem[1];
+                    modificationItem[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute(X509User.getCertTypeAttr(), type));
+                    try {
+                        context.modifyAttributes(dn, modificationItem);
+                    } catch (NamingException e) {
+                        logger.error(e.getMessage(), e);
+                    }
+                }
+            } else {
+                ModificationItem modificationItem[] = new ModificationItem[1];
+                modificationItem[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute(X509User.getCertTypeAttr(), type));
+                try {
+                    context.modifyAttributes(dn, modificationItem);
+                } catch (NamingException e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
         }
+        LdapUtils.close(context);
+        json = "{success:true,dn:'" + dn + "'}";
         writer.write(json);
         writer.close();
         return null;
@@ -473,7 +501,7 @@ public class X509UserAction extends ActionSupport {
                                 SysLogSend.sysLog("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                                 logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "用户证书", msg);
                             }
-                        }else {
+                        } else {
                             msg = "签发用户证书失败,构建PKCS文件出现错误!用户名" + x509User.getCn();
                             json = "{success:false,msg:'" + msg + "'}";
                             logger.info("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
@@ -543,7 +571,7 @@ public class X509UserAction extends ActionSupport {
         X509Ca x509Ca = X509CaAttributeMapper.mapFromAttributes(fatherResults);
         //构建用户请求文件
         boolean flag = X509UserConfigUtils.buildUser(x509User, storeDirectory);
-        if(flag) {
+        if (flag) {
             flag = X509ShellUtils.build_csr(x509Ca.getKeyLength(), storeDirectory + "/" + x509User.getCn() + X509Context.keyName, storeDirectory + "/" + x509User.getCn() + X509Context.csrName, storeDirectory + "/" + x509User.getCn() + X509Context.config_type_certificate);
             if (flag) {
                 //构建csr请求
@@ -604,7 +632,7 @@ public class X509UserAction extends ActionSupport {
                 SysLogSend.sysLog("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                 logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "用户证书", msg);
             }
-        }  else {
+        } else {
             msg = "构建用户信息出错!请确定用户信息是否正确填写,用户名:" + x509User.getCn();
             json = "{success:false,msg:'" + msg + "'}";
             logger.info("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
@@ -647,7 +675,7 @@ public class X509UserAction extends ActionSupport {
                 json = "{success:false,msg:'" + msg + "'}";
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
             msg = "注销用户失败,删除用户信息出错,用户名:" + CN;
             logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "用户证书", msg);
             logger.info("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
@@ -698,7 +726,7 @@ public class X509UserAction extends ActionSupport {
                 }
             } catch (Exception e) {
                 msg = "吊销证书失败!用户名:" + CN;
-                logger.error(e.getMessage(),e);
+                logger.error(e.getMessage(), e);
                 json = "{success:false,msg:'" + msg + "'}";
                 logger.info("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                 SysLogSend.sysLog("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
@@ -784,21 +812,21 @@ public class X509UserAction extends ActionSupport {
                         SysLogSend.sysLog("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                         logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "用户证书", msg);
                     }
-                }else {
+                } else {
                     msg = "重发用户证书失败,签发证书出错,用户名" + u.getCn();
                     json = "{success:false,msg:'" + msg + "'}";
                     logger.info("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                     SysLogSend.sysLog("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                     logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "用户证书", msg);
                 }
-            }else {
+            } else {
                 msg = "重发用户证书失败,请确定用户信息是否正确填写且未包含特殊字符,用户名" + u.getCn();
                 json = "{success:false,msg:'" + msg + "'}";
                 logger.info("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                 SysLogSend.sysLog("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);
                 logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "用户证书", msg);
             }
-        }else {
+        } else {
             msg = "重发用户证书失败,请确定用户信息是否正确填写,用户名" + u.getCn();
             json = "{success:false,msg:'" + msg + "'}";
             logger.info("管理员" + SessionUtils.getAccount(request).getUserName() + ",操作时间:" + new Date() + ",操作信息:" + msg);

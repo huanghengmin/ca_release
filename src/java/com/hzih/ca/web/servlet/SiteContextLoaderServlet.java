@@ -6,9 +6,9 @@ import com.hzih.ca.domain.SafePolicy;
 import com.hzih.ca.myjfree.RunMonitorInfoList;
 import com.hzih.ca.myjfree.RunMonitorLiuliangBean2List;
 import com.hzih.ca.service.SafePolicyService;
-import com.hzih.ca.tcp.ServiceUtils;
-import com.hzih.ca.tcp.TcpServer;
-import com.hzih.ca.utils.ServiceUtil;
+//import com.hzih.ca.tcp.ServiceUtils;
+//import com.hzih.ca.tcp.TcpServer;
+//import com.hzih.ca.utils.ServiceUtil;
 import com.hzih.ca.web.SiteContext;
 import com.inetec.common.util.OSInfo;
 import org.apache.commons.logging.Log;
@@ -18,7 +18,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.*;
 import java.io.IOException;
-import java.net.InetSocketAddress;
+//import java.net.InetSocketAddress;
 
 public class SiteContextLoaderServlet extends DispatcherServlet {
 	/**
@@ -37,10 +37,10 @@ public class SiteContextLoaderServlet extends DispatcherServlet {
         SafePolicy data = service.getData();
         SiteContext.getInstance().safePolicy = data;
 
-		InetSocketAddress localAddressServer = new InetSocketAddress("0.0.0.0", 5001);
+		/*InetSocketAddress localAddressServer = new InetSocketAddress("0.0.0.0", 5001);
 		TcpServer tcpServer = new TcpServer();
 		tcpServer.init(localAddressServer);
-		new Thread(tcpServer).start();
+		new Thread(tcpServer).start();*/
 
 		/**
 		 * 读取网卡流量

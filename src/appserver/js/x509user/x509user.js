@@ -69,6 +69,7 @@ Ext.onReady(function () {
         {header: "城市/乡镇", dataIndex: "city", sortable: true, menuDisabled: true, hidden: true},
         {header: "公司/团体", dataIndex: "organization", sortable: true, menuDisabled: true},
         {header: "部门/机构", dataIndex: "institution", sortable: true, menuDisabled: true},
+        {header: "警员编号", dataIndex: "employeeCode", sortable: true, menuDisabled: true},
         {header: "状态", dataIndex: "certStatus", hidden: true, sortable: true, menuDisabled: true},
         {header: '操作标记', dataIndex: 'flag', sortable: true, menuDisabled: true, renderer: show_flag, width: 300}
     ]);
@@ -108,6 +109,15 @@ Ext.onReady(function () {
                 iconCls: 'replace',
                 handler: function () {
                     batchSignUser(store);
+                }
+            },
+            {
+                id: 'batchExportUser.info',
+                xtype: 'button',
+                text: '导出为Excel',
+                iconCls: 'replace',
+                handler: function () {
+                    batchExportUser();
                 }
             }
         ]
@@ -207,7 +217,8 @@ function viewInfo() {
     var status = recode.get("certStatus")
     var status_v;
     if (status == "0") {
-        status_v = "<font color='green'>已发证</font>";
+        var certType = recode.get("certType")
+        status_v = "<font color='green'>已发"+certType+"证</font>";
     } else if (status == "1") {
         status_v = "<font color='red'>已吊销</font>";
     }
@@ -252,6 +263,10 @@ function viewInfo() {
             new Ext.form.DisplayField({
                 fieldLabel: '电子邮件',
                 value: recode.get("userEmail")
+            }),
+            new Ext.form.DisplayField({
+                fieldLabel: '警员编号',
+                value: recode.get("employeeCode")
             }),
             new Ext.form.DisplayField({
                 fieldLabel: '省/行政区',
@@ -528,6 +543,13 @@ function signUser(store) {
                 name: 'x509User.userEmail',
                 allowBlank: false,
                 blankText: "电子邮件"
+            }),
+            new Ext.form.TextField({
+                fieldLabel: '警员编号',
+                emptyText: "请输入警员编号",
+                name: 'x509User.employeeCode',
+                allowBlank: false,
+                blankText: "警员编号"
             }),
             new Ext.form.ComboBox({
                 fieldLabel: 'CSP设备类型',
@@ -936,6 +958,14 @@ function modifyUser() {
                     allowBlank: false,
                     blankText: "电子邮件"
                 }),
+                new Ext.form.TextField({
+                    fieldLabel: '警员编号',
+                    emptyText: "请输入警员编号",
+                    value: record.get("employeeCode"),
+                    name: 'x509User.employeeCode',
+                    allowBlank: false,
+                    blankText: "警员编号"
+                }),
                 new Ext.form.ComboBox({
                     fieldLabel: 'CSP设备类型',
                     emptyText: '请选择写入证书设备类型',
@@ -1087,7 +1117,8 @@ function restoreUser() {
     var status = recode.get("certStatus")
     var status_v;
     if (status == "0") {
-        status_v = "<font color='red'>已发证</font>";
+        var certType = recode.get("certType")
+        status_v = "<font color='green'>已发"+certType+"证</font>";
     } else if (status == "1") {
         status_v = "<font color='red'>已吊销</font>";
     }
@@ -1187,6 +1218,10 @@ function restoreUser() {
             new Ext.form.DisplayField({
                 fieldLabel: '电子邮件',
                 value: recode.get("userEmail")
+            }),
+            new Ext.form.DisplayField({
+                fieldLabel: '警员编号',
+                value: recode.get("employeeCode")
             }),
             new Ext.form.DisplayField({
                 fieldLabel: '状态',
@@ -1491,13 +1526,13 @@ function revokeUser() {
  * 重发用户证书
  */
 function retryUser() {
-
     var grid = Ext.getCmp('grid.info');
     var recode = grid.getSelectionModel().getSelected();
     var status = recode.get("certStatus")
     var status_v;
     if (status == "0") {
-        status_v = "<font color='red'>已发证</font>";
+        var certType = recode.get("certType")
+        status_v = "<font color='green'>已发"+certType+"证</font>";
     } else if (status == "1") {
         status_v = "<font color='red'>已吊销</font>";
     }
@@ -1596,6 +1631,10 @@ function retryUser() {
             new Ext.form.DisplayField({
                 fieldLabel: '电子邮件',
                 value: recode.get("userEmail")
+            }),
+            new Ext.form.DisplayField({
+                fieldLabel: '警员编号',
+                value: recode.get("employeeCode")
             }),
             new Ext.form.DisplayField({
                 fieldLabel: '状态',
@@ -1904,15 +1943,13 @@ function batchSignUser(store) {
     }).show();
 };
 
-
 function downloadModel() {
     if (!Ext.fly('test')) {
         var frm = document.createElement('form');
         frm.id = 'test';
         frm.style.display = 'none';
         document.body.appendChild(frm);
-    }
-    ;
+    };
     Ext.Ajax.request({
         url: '../../X509UserBatchImport_downloadModel.action',
         timeout: 20 * 60 * 1000,
@@ -1921,6 +1958,57 @@ function downloadModel() {
         isUpload: true
     });
 };
+
+function batchExportUser(){
+    Ext.Msg.confirm("确认", "确认导入数据为Excel!", function (sid) {
+        if (sid == "yes") {
+            Ext.Ajax.request({
+                url: '../../X509UserBatchImport_batchExportUser.action',
+                timeout: 20 * 60 * 1000,
+                method: 'POST',
+                success: function (r, o) {
+                    var respText = Ext.util.JSON.decode(r.responseText);
+                    if (respText.flag == 'false') {
+                        Ext.MessageBox.show({
+                            title: '信息',
+                            width: 250,
+                            msg: respText.msg,
+                            buttons: Ext.MessageBox.ERROR,
+                            buttons: {'ok': '确定'},
+                            icon: Ext.MessageBox.ERROR,
+                            closable: false
+                        });
+                    }else{
+                        if (!Ext.fly('test')) {
+                            var frm = document.createElement('form');
+                            frm.id = 'test';
+                            frm.style.display = 'none';
+                            document.body.appendChild(frm);
+                        };
+                        Ext.Ajax.request({
+                            url: '../../X509UserBatchImport_downloadExportUser.action',
+                            timeout: 20 * 60 * 1000,
+                            form: Ext.fly('test'),
+                            method: 'POST',
+                            isUpload: false
+                        });
+                    }
+                },
+                failure: function (r, o) {
+                    Ext.MessageBox.show({
+                        title: '信息',
+                        width: 250,
+                        msg: "导入数据为Excel失败",
+                        buttons: Ext.MessageBox.ERROR,
+                        buttons: {'ok': '确定'},
+                        icon: Ext.MessageBox.ERROR,
+                        closable: false
+                    });
+                }
+            });
+        }
+    });
+}
 
 
 

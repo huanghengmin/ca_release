@@ -198,12 +198,12 @@
             menu_root_node_4.appendChild(mrn_4_1);
             </lbs:access>
 
-//            var mrn_5_2 = new Ext.tree.TreeNode({
-//                id: 'mrn_5_2',
-//                text: 'CA配置',
-//                leaf: true,
-//                url: 'pages/x509ca/x509ca.jsp'
-//            });
+            var mrn_5_2 = new Ext.tree.TreeNode({
+                id: 'mrn_5_2',
+                text: 'CA配置',
+                leaf: true,
+                url: 'pages/x509ca/x509ca.jsp'
+            });
 
             var mrn_5_3 = new Ext.tree.TreeNode({
                 id: 'mrn_5_3',
@@ -212,9 +212,9 @@
                 url: 'pages/x509ca/x509caview.jsp'
             });
 
-            <%--<lbs:access code="SECOND_CAPZ">--%>
-            <%--menu_root_node_5.appendChild(mrn_5_2);--%>
-            <%--</lbs:access>--%>
+            <lbs:access code="SECOND_CAPZ">
+            menu_root_node_5.appendChild(mrn_5_2);
+            </lbs:access>
             <lbs:access code="SECOND_CAXX">
             menu_root_node_5.appendChild(mrn_5_3);
             </lbs:access>
