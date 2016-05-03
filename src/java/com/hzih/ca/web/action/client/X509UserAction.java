@@ -112,8 +112,10 @@ public class X509UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setCharacterEncoding("utf-8");
+        String signDn = X509CaXML.getSignDn();
         String CN = request.getParameter("CN");
-        String DN = request.getParameter("DN");
+        String DN = DNUtils.add(signDn,CN);
+//        String DN = request.getParameter("DN");
         String json = "{success:false}";
         PrintWriter writer = response.getWriter();
         String type = request.getParameter("type");
@@ -170,8 +172,11 @@ public class X509UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setCharacterEncoding("utf-8");
-        String DN = request.getParameter("DN");
+//        String DN = request.getParameter("DN");
+        //签发DN
+        String signDn = X509CaXML.getSignDn();
         String CN = request.getParameter("CN");
+        String DN = DNUtils.add(signDn,CN);
         //得到父路径
         String dir = DirectoryUtils.getSuperDirectory(DN);
         String subPath = null;
@@ -187,8 +192,11 @@ public class X509UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setCharacterEncoding("utf-8");
-        String DN = request.getParameter("DN");
+//        String DN = request.getParameter("DN");
+        //签发DN
+        String signDn = X509CaXML.getSignDn();
         String CN = request.getParameter("CN");
+        String DN = DNUtils.add(signDn,CN);
         //得到父路径
         String dir = DirectoryUtils.getSuperDirectory(DN);
         String subPath = null;
@@ -204,8 +212,11 @@ public class X509UserAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setCharacterEncoding("utf-8");
-        String DN = request.getParameter("DN");
+//        String DN = request.getParameter("DN");
+        //签发DN
+        String signDn = X509CaXML.getSignDn();
         String CN = request.getParameter("CN");
+        String DN = DNUtils.add(signDn,CN);
         //得到父路径
         String dir = DirectoryUtils.getSuperDirectory(DN);
         String subPath = null;
@@ -223,8 +234,11 @@ public class X509UserAction extends ActionSupport {
         response.setCharacterEncoding("utf-8");
         PrintWriter writer = response.getWriter();
         StringBuilder json = new StringBuilder();
-        String DN = request.getParameter("DN");
+//        String DN = request.getParameter("DN");
+        //签发DN
+        String signDn = X509CaXML.getSignDn();
         String CN = request.getParameter("CN");
+        String DN = DNUtils.add(signDn,CN);
         //得到父路径
         json.append("http://")
                 .append(LdapXMLUtils.getValue(LdapXMLUtils.host))
@@ -245,8 +259,11 @@ public class X509UserAction extends ActionSupport {
         response.setCharacterEncoding("utf-8");
         PrintWriter writer = response.getWriter();
         StringBuilder json = new StringBuilder();
-        String DN = request.getParameter("DN");
+//        String DN = request.getParameter("DN");
+        //签发DN
+        String signDn = X509CaXML.getSignDn();
         String CN = request.getParameter("CN");
+        String DN = DNUtils.add(signDn,CN);
         //得到父路径
         json.append("http://")
                 .append(LdapXMLUtils.getValue(LdapXMLUtils.host))
@@ -267,8 +284,11 @@ public class X509UserAction extends ActionSupport {
         response.setCharacterEncoding("utf-8");
         PrintWriter writer = response.getWriter();
         StringBuilder json = new StringBuilder();
-        String DN = request.getParameter("DN");
+//        String DN = request.getParameter("DN");
+        //签发DN
+        String signDn = X509CaXML.getSignDn();
         String CN = request.getParameter("CN");
+        String DN = DNUtils.add(signDn,CN);
         //得到父路径
         json.append("http://")
                 .append(LdapXMLUtils.getValue(LdapXMLUtils.host))

@@ -99,7 +99,7 @@ Ext.onReady(function () {
                 text: '签发证书',
                 iconCls: 'add',
                 handler: function () {
-                    signUser(store);
+                    signUser(grid_panel);
                 }
             },
             {
@@ -108,7 +108,7 @@ Ext.onReady(function () {
                 text: '批量签发证书',
                 iconCls: 'replace',
                 handler: function () {
-                    batchSignUser(store);
+                    batchSignUser(grid_panel);
                 }
             },
             {
@@ -307,7 +307,7 @@ function viewInfo() {
  * @param grid_panel
  * @param store
  */
-function signUser(store) {
+function signUser(grid) {
 
     var ZdActivex = document.getElementById("ZdActivex");
 
@@ -645,22 +645,7 @@ function signUser(store) {
                                         var type = Ext.getCmp("add_x509User_smartCard_type").getRawValue();
                                         var container = Ext.getCmp("add_x509User_smartCard_container").getValue();
                                         var key_type = Ext.getCmp("add_x509User_key_type").getRawValue();
-                                        Ext.Ajax.request({
-                                            url: "../../X509UserAction_modifyUserSmartCard.action",
-                                            waitTitle: '请等待',
-                                            waitMsg: '正在提交',
-                                            params: {CN: cn, type: type},
-                                            success: function (res, p) {
-                                                var json = Ext.util.JSON.decode(res.responseText);
-                                                var dn = json.dn;
-                                                getDownUrl(dn, cn, csp, type, container, ZdActivex, key_type);
-                                                store.reload();
-                                                win.close();
-                                            },
-                                            failure: function (result) {
-                                                Ext.Msg.alert("提示", "删除失败!");
-                                            }
-                                        });
+                                        getDownUrl(grid,win,cn, csp, type, container, ZdActivex, key_type);
                                     },
                                     failure: function (form, action) {
                                         var json = Ext.decode(action.response.responseText);
@@ -1057,20 +1042,20 @@ function modifyUser() {
                                     var type = Ext.getCmp("modifyUser_x509User_smartCard_type").getRawValue();
                                     var container = Ext.getCmp("modifyUser_x509User_smartCard_container").getValue();
                                     var key_type = Ext.getCmp("modifyUser_x509User_key_type").getRawValue();
-                                    Ext.Ajax.request({
-                                        url: "../../X509UserAction_modifyUserSmartCard.action",
-                                        waitTitle: '请等待',
-                                        waitMsg: '正在提交',
-                                        params: {DN: record.get("dn"), type: type},
-                                        success: function (res, p) {
-                                            getDownUrl(record.get("dn"), record.get("cn"), csp, type, container, ZdActivex, key_type);
-                                            grid_panel.getStore().reload();
-                                            win.close();
-                                        },
-                                        failure: function (result) {
-                                            Ext.Msg.alert("提示", "更新失败!");
-                                        }
-                                    });
+                                    // Ext.Ajax.request({
+                                    //     url: "../../X509UserAction_modifyUserSmartCard.action",
+                                    //     waitTitle: '请等待',
+                                    //     waitMsg: '正在提交',
+                                    //     params: {DN: record.get("dn"), type: type},
+                                    //     success: function (res, p) {
+                                            getDownUrl(grid_panel,win, record.get("cn"), csp, type, container, ZdActivex, key_type);
+                                            // grid_panel.getStore().reload();
+                                            // win.close();
+                                        // },
+                                        // failure: function (result) {
+                                        //     Ext.Msg.alert("提示", "更新失败!");
+                                        // }
+                                    // });
                                 },
                                 failure: function () {
                                     Ext.MessageBox.show({
@@ -1310,20 +1295,21 @@ function restoreUser() {
                         var type = Ext.getCmp("restoreUser_smartCard_type").getRawValue();
                         var container = Ext.getCmp("restoreUser_smartCard_container").getValue();
                         var key_type = Ext.getCmp("restoreUser_x509User_key_type").getRawValue();
-                        formPanel.getForm().submit({
+                        getDownUrl(grid,win,cn, csp, type, container, ZdActivex, key_type);
+                       /* formPanel.getForm().submit({
                             url: "../../X509UserAction_modifyUserSmartCard.action",
                             waitTitle: '请等待',
                             waitMsg: '正在提交',
                             params: {DN: DN, type: type},
                             success: function (form, action) {
-                                getDownUrl(DN, cn, csp, type, container, ZdActivex, key_type);
+
                                 grid.getStore().reload();
                                 win.close();
                             },
                             failure: function (form, action) {
                                 Ext.Msg.alert("提示", "删除失败!");
                             }
-                        });
+                        });*/
                     } else {
                         Ext.Msg.alert('提示', '请先填写完正确信息');
                     }
@@ -1348,7 +1334,7 @@ function restoreUser() {
  * @param name
  * @param ZdActivex
  */
-function getDownUrl(DN, CN, csp, type, name, ZdActivex, keyType) {
+function getDownUrl(grid,win,CN, csp, type, name, ZdActivex, keyType) {
     var values = new Array();
     values[0] = "G";
     values[1] = "H";
@@ -1386,7 +1372,7 @@ function getDownUrl(DN, CN, csp, type, name, ZdActivex, keyType) {
         url: "../../X509UserAction_getUserPfxDownLoadURL.action",
         timeout: 5 * 60 * 1000,
         method: "POST",
-        params: {DN: DN, CN: CN},
+        params: {CN: CN},
         success: function (res, action) {
             myMask.hide();
             var respText = Ext.util.JSON.decode(res.responseText);
@@ -1397,18 +1383,54 @@ function getDownUrl(DN, CN, csp, type, name, ZdActivex, keyType) {
             try {
                 var filePath = folder + "/" + cn + ".pfx";
                 var flag = ZdActivex.DownLoadToLocal(Url, filePath);
-                if (flag = 1) {
+                if (flag == 1) {
                     if (keyType == "交换密钥") {
-                        ZdActivex.ImportExchangePFX(csp, filePath, "", name);
+                       var i_flag =  ZdActivex.ImportExchangePFX(csp, filePath, "", name);
+                        // alert(i_flag)
+                        if(i_flag == 1){
+                            Ext.Ajax.request({
+                                url: "../../X509UserAction_modifyUserSmartCard.action",
+                                waitTitle: '请等待',
+                                waitMsg: '正在提交',
+                                params: {type: type,CN:CN},
+                                success: function (res, action) {
+                                    grid.getStore().reload();
+                                    win.close();
+                                },
+                                failure: function (res, action) {
+                                    Ext.Msg.alert("提示", type + "更新发证状态失败!");
+                                }
+                            });
+                        }else {
+                            Ext.Msg.alert("提示", type + " 签发证书失败!");
+                        }
                     } else if (keyType == "签名密钥") {
-                        ZdActivex.ImportPFX(csp, filePath, "", name);
+                        var i_flag = ZdActivex.ImportPFX(csp, filePath, "", name);
+                        // alert(i_flag)
+                        if(i_flag == 1){
+                            Ext.Ajax.request({
+                                url: "../../X509UserAction_modifyUserSmartCard.action",
+                                waitTitle: '请等待',
+                                waitMsg: '正在提交',
+                                params: {type: type,CN:CN},
+                                success: function (res, action) {
+                                    grid.getStore().reload();
+                                    win.close();
+                                },
+                                failure: function (res, action) {
+                                    Ext.Msg.alert("提示", type + "更新发证状态失败!");
+                                }
+                            });
+                        }else {
+                            Ext.Msg.alert("提示", type + " 签发证书失败!");
+                        }
                     }
                     if (type == "TFCard") {
                         Ext.Ajax.request({
                             url: "../../X509UserAction_getUserCerDownLoadURL.action",
                             timeout: 5 * 60 * 1000,
                             method: "POST",
-                            params: {DN: DN, CN: CN},
+                            params: {CN: CN},
                             success: function (res, action) {
                                 var respText = Ext.util.JSON.decode(res.responseText);
                                 var Url = respText.url;   //下载地址*/
@@ -1445,7 +1467,7 @@ function getDownUrl(DN, CN, csp, type, name, ZdActivex, keyType) {
                             url: "../../X509UserAction_getUserKeyDownLoadURL.action",
                             timeout: 5 * 60 * 1000,
                             method: "POST",
-                            params: {DN: DN, CN: CN},
+                            params: {CN: CN},
                             success: function (res, action) {
                                 var respText = Ext.util.JSON.decode(res.responseText);
                                 var Url = respText.url;    //下载地址
@@ -1719,7 +1741,6 @@ function retryUser() {
                 text: '证书重发',
                 handler: function () {
                     if (formPanel.form.isValid()) {
-
                         Ext.Msg.confirm("警告", "是否重新签发证书,重发后原有证书不可用!", function (sid) {
                             if (sid == "yes") {
                                 var csp = Ext.getCmp("restoreUser_smartCard_csp").getValue();
@@ -1727,28 +1748,16 @@ function retryUser() {
                                 var container = Ext.getCmp("restoreUser_smartCard_container").getValue();
                                 var key_type = Ext.getCmp("restoreUser_x509User_key_type").getRawValue();
                                 formPanel.getForm().submit({
-                                    url: "../../X509UserAction_modifyUserSmartCard.action",
+                                    url: '../../X509UserAction_retryUser.action',
                                     waitTitle: '请等待',
                                     waitMsg: '正在提交',
-                                    params: {DN: DN, type: type},
+                                    params: {DN: DN, CN: cn},
+                                    method: 'POST',
                                     success: function (form, action) {
-                                        Ext.Ajax.request({
-                                            url: '../../X509UserAction_retryUser.action',
-                                            timeout: 20 * 60 * 1000,
-                                            params: {DN: DN, CN: cn},
-                                            method: 'POST',
-                                            success: function (form, action) {
-                                                getDownUrl(DN, cn, csp, type, container, ZdActivex, key_type);
-                                                grid.getStore().reload();
-                                                win.close();
-                                            },
-                                            failure: function (result) {
-                                                Ext.Msg.alert("提示", "重发证书失败!");
-                                            }
-                                        });
+                                        getDownUrl(grid,win,cn, csp, type, container, ZdActivex, key_type);
                                     },
                                     failure: function (form, action) {
-                                        Ext.Msg.alert("提示", "删除失败!");
+                                        Ext.Msg.alert("提示", "重发证书失败!");
                                     }
                                 });
                             }
@@ -1765,34 +1774,9 @@ function retryUser() {
             }
         ]
     }).show();
-
-
-    /*  var grid = Ext.getCmp('grid.info');
-     var recode = grid.getSelectionModel().getSelected();
-     var CN = recode.get("cn");
-     var DN = recode.get("dn");
-     Ext.Msg.confirm("警告", "是否重新签发证书,重发后原有证书不可用!", function (sid) {
-     if (sid == "yes") {
-     Ext.Ajax.request({
-     url: '../../X509UserAction_retryUser.action',
-     timeout: 20 * 60 * 1000,
-     params: {DN: DN, CN: CN},
-     method: 'POST',
-     success: function (form, action) {
-     Ext.Msg.alert("提示", "重发证书成功!");
-     grid.getStore().reload();
-     },
-     failure: function (result) {
-     Ext.Msg.alert("提示", "重发证书失败!");
-     grid.getStore().reload();
-     }
-     });
-     }
-     });*/
 }
 
-
-function batchSignUser(store) {
+function batchSignUser(grid) {
     var grid_panel = Ext.getCmp("grid.info");
     var formPanel = new Ext.form.FormPanel({
         frame: true,
@@ -1870,7 +1854,7 @@ function batchSignUser(store) {
                                             success: function (form, action) {
                                                 myMask_execute.hide();
                                                 var msg = action.result.msg;
-                                                grid_panel.getStore().reload();
+                                                grid.getStore().reload();
                                                 Ext.Msg.alert("提示", msg);
                                                 win.close();
                                             },
@@ -1894,7 +1878,7 @@ function batchSignUser(store) {
                                             success: function (form, action) {
                                                 myMask_execute.hide();
                                                 var msg = action.result.msg;
-                                                grid_panel.getStore().reload();
+                                                grid.getStore().reload();
                                                 Ext.Msg.alert("提示", msg);
                                                 win.close();
                                             },
@@ -1990,7 +1974,7 @@ function batchExportUser(){
                             timeout: 20 * 60 * 1000,
                             form: Ext.fly('test'),
                             method: 'POST',
-                            isUpload: false
+                            isUpload: true
                         });
                     }
                 },
