@@ -1944,7 +1944,7 @@ function downloadModel() {
 };
 
 function batchExportUser(){
-    Ext.Msg.confirm("确认", "确认导入数据为Excel!", function (sid) {
+    Ext.Msg.confirm("确认", "确认导出数据为Excel!", function (sid) {
         if (sid == "yes") {
             Ext.Ajax.request({
                 url: '../../X509UserBatchImport_batchExportUser.action',
@@ -1982,7 +1982,7 @@ function batchExportUser(){
                     Ext.MessageBox.show({
                         title: '信息',
                         width: 250,
-                        msg: "导入数据为Excel失败",
+                        msg: "导出数据为Excel失败",
                         buttons: Ext.MessageBox.ERROR,
                         buttons: {'ok': '确定'},
                         icon: Ext.MessageBox.ERROR,
