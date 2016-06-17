@@ -139,8 +139,8 @@ public class X509UserAction extends ActionSupport {
         if (results.hasMore()) {
             SearchResult sr = (SearchResult) results.next();
             Attributes attr = sr.getAttributes();
-            if (attr.get(X509User.getCertTypeAttr()) != null) {
-                String certType = X509User.getCertTypeAttr();
+            String certType = LdapUtils.getAttrValue(attr,X509User.getCertTypeAttr());
+            if (certType != null) {
                 if (!certType.equals(type)) {
                     type = "TFCard和USBKey";
                     ModificationItem modificationItem[] = new ModificationItem[1];
@@ -380,6 +380,7 @@ public class X509UserAction extends ActionSupport {
         List<SearchResult> resultList = new ArrayList<>();
         SearchControls sc = new SearchControls();
         sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
         NamingEnumeration results = context.search(LdapXMLUtils.getValue(LdapXMLUtils.base), stringBuilder.toString(), sc);
         while (results.hasMore()) {
             SearchResult sr = (SearchResult) results.next();
