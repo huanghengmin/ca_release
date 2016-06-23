@@ -26,6 +26,7 @@ import org.apache.struts2.ServletActionContext;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
+import javax.naming.ldap.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -344,7 +345,7 @@ public class X509UserAction extends ActionSupport {
         ActionBase actionBase = new ActionBase();
         String result = actionBase.actionBegin(request);
         LdapUtils ldapUtils = new LdapUtils();
-        DirContext context = ldapUtils.getCtx();
+        LdapContext context = ldapUtils.getLdapContext();
         StringBuilder json = new StringBuilder("");
         String start = request.getParameter("start");
         String limit = request.getParameter("limit");
@@ -363,12 +364,13 @@ public class X509UserAction extends ActionSupport {
 
         StringBuilder stringBuilder = getFilterEndUser(cn, idCard, phone, address, email, employeeCode, province, city, organization, institutions);
 //         得到查询结果列表
-        List<SearchResult> resultList = getAllResultListData(context, stringBuilder);
+//        List<SearchResult> resultList = getAllResultListData(context, stringBuilder);
 //         得到返回结果列表
-        List<String> list = getListData(resultList);
+//        List<String> list = getListData(resultList);
 
+        List<String> resultList = getAllResultListData(context, stringBuilder);
 
-        StringBuffer showData = getReturnData(first, limitInt, list);
+        StringBuffer showData = getReturnData(first, limitInt, resultList);
 
         json.append("{totalCount:" + resultList.size() + ",root:[" + showData.toString() + "]}");
         ldapUtils.close(context);
@@ -376,8 +378,59 @@ public class X509UserAction extends ActionSupport {
         return null;
     }
 
-    private List<SearchResult> getAllResultListData(DirContext context, StringBuilder stringBuilder) throws NamingException {
-        List<SearchResult> resultList = new ArrayList<>();
+    private static byte[] parseControls(Control[] controls) throws NamingException {
+        byte[] cookie = null;
+        if (controls != null) {
+            for (int i = 0; i < controls.length; i++) {
+                if (controls[i] instanceof PagedResultsResponseControl) {
+                    PagedResultsResponseControl prrc = (PagedResultsResponseControl) controls[i];
+                    cookie = prrc.getCookie();
+                }else if(controls[i] instanceof SortResponseControl) {
+                    SortResponseControl src = (SortResponseControl) controls[i];
+                    if (!src.isSorted()) {
+                        throw src.getException();
+                    }
+                }
+            }
+        }
+        return (cookie == null) ? new byte[0] : cookie;
+    }
+
+    private List<String> getAllResultListData(LdapContext context, StringBuilder stringBuilder) throws NamingException {
+        List<String> resultList = new ArrayList<>();
+        String sortKey = X509User.getEmployeeCodeAttr();
+        int pageSize =10000;
+        byte[] cookie = null;
+        try {
+            context.setRequestControls(new Control[]{new PagedResultsControl(pageSize, Control.NONCRITICAL),new SortControl(sortKey,
+                    Control.CRITICAL)});
+            do {
+                SearchControls sc = new SearchControls();
+                sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
+                NamingEnumeration results = context.search(LdapXMLUtils.getValue(LdapXMLUtils.base), stringBuilder.toString(), sc);
+
+                while (results.hasMoreElements()) {
+                    SearchResult result = (SearchResult) results.nextElement();
+                    String data = X509UserAttrJsonMapper.mapJsonFromAttr(result);
+                    resultList.add(data.toString());
+                }
+                Control[] controls = context.getResponseControls();
+                cookie = parseControls(controls);
+                context.setRequestControls(new Control[]{new PagedResultsControl(pageSize, cookie, Control.CRITICAL)});
+            } while (cookie != null&& (cookie.length != 0));
+        } catch (NamingException e) {
+            logger.error("PagedSearch failed.",e);
+        } catch (IOException ie) {
+            logger.error("PagedSearch failed.",ie);
+        } catch (Exception ie) {
+            logger.error("PagedSearch failed.",ie);
+        }finally {
+            context.close();
+        }
+        return resultList;
+
+
+        /*List<SearchResult> resultList = new ArrayList<>();
         SearchControls sc = new SearchControls();
         sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
@@ -386,10 +439,10 @@ public class X509UserAction extends ActionSupport {
             SearchResult sr = (SearchResult) results.next();
             resultList.add(sr);
         }
-        return resultList;
+        return resultList;*/
     }
 
-    private List<String> getListData(List<SearchResult> resultList) throws NamingException {
+   /* private List<String> getListData(List<SearchResult> resultList) throws NamingException {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < resultList.size(); i++) {
             SearchResult sr = resultList.get(i);
@@ -397,7 +450,7 @@ public class X509UserAction extends ActionSupport {
             list.add(data.toString());
         }
         return list;
-    }
+    }*/
 
     private StringBuffer getReturnData(Integer first, Integer limitInt, List<String> list) {
         StringBuffer showData = new StringBuffer();

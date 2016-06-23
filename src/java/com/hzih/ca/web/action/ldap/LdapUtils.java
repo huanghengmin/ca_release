@@ -7,6 +7,8 @@ import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -83,6 +85,25 @@ public class LdapUtils {
         } else {
             try {
                 ctx = new InitialDirContext(env);
+//                log.info("LDAP 连接开启!");
+            } catch (NamingException e) {
+                log.error(e.getMessage(),e);
+                log.info("创建LDAP连接不成功!");
+                e.printStackTrace();
+            }
+        }
+        return ctx;
+    }
+
+    public LdapContext getLdapContext() {
+        Hashtable<String, String> env  =  init();
+        LdapContext ctx =null;
+        // 参数为空
+        if (env == null) {
+            log.info("请配置LDAP连接参数!");
+        } else {
+            try {
+                ctx = new InitialLdapContext(env, null);
 //                log.info("LDAP 连接开启!");
             } catch (NamingException e) {
                 log.error(e.getMessage(),e);

@@ -20,7 +20,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class X509CaDaoImpl implements X509CaDao {
-    private Logger log = Logger.getLogger(X509CaDaoImpl.class);
+//    private Logger log = Logger.getLogger(X509CaDaoImpl.class);
 
     @Override
     public boolean add(DirContext ctx, X509Ca x509Ca)  {
@@ -108,7 +108,7 @@ public class X509CaDaoImpl implements X509CaDao {
             ctx.createSubcontext(dn, attr);
             return true;
         } catch (NamingException e) {
-            log.error(e.getMessage(),e);
+//            log.error(e.getMessage(),e);
            return false;
         }
     }
@@ -173,7 +173,7 @@ public class X509CaDaoImpl implements X509CaDao {
                 ctx.modifyAttributes(x509Ca.getDn(), mArray);
                 return true;
             }catch (Exception e){
-                log.info("更新证书不成功!" + e.getMessage(),e);
+//                log.info("更新证书不成功!" + e.getMessage(),e);
                 return false;
             }
         }
