@@ -20,12 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7886a50-f3f0-4343-ba5b-160cdb03b937" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/java/index.jsp" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/com/hzih/ca/dao/impl/X509CaDaoImpl.java" afterPath="$PROJECT_DIR$/src/java/com/hzih/ca/dao/impl/X509CaDaoImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/client/X509UserAction.java" afterPath="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/client/X509UserAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ldap/LdapUtils.java" afterPath="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ldap/LdapUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/server/X509ServerAction.java" afterPath="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/server/X509ServerAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/version/version.properties" afterPath="$PROJECT_DIR$/src/version/version.properties" />
     </list>
     <ignored path="pubwar.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,7 +95,7 @@
     <favorites_list name="pubwar" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -160,7 +157,6 @@
         <option value="$PROJECT_DIR$/src/appserver/index.jsp" />
         <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/batch/X509UserBatchImport.java" />
         <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/servlet/SiteContextLoaderServlet.java" />
-        <option value="$PROJECT_DIR$/src/version/version.properties" />
         <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/syslog/SysLogConfigAction.java" />
         <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ldap/GetAllAttrs.java" />
         <option value="$PROJECT_DIR$/src/java/com/hzih/ca/dao/impl/X509CaDaoImpl.java" />
@@ -171,9 +167,10 @@
         <option value="$PROJECT_DIR$/test/java/com/hzih/ldap/LdapAdd.java" />
         <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ldap/LdapUtils.java" />
         <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/server/X509ServerAction.java" />
-        <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/client/X509UserAction.java" />
         <option value="$PROJECT_DIR$/src/appserver/js/x509server/x509server.js" />
         <option value="$PROJECT_DIR$/src/appserver/js/x509user/x509user.js" />
+        <option value="$PROJECT_DIR$/src/java/com/hzih/ca/web/action/client/X509UserAction.java" />
+        <option value="$PROJECT_DIR$/src/version/version.properties" />
       </list>
     </option>
   </component>
@@ -381,6 +378,181 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca_release" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca_release" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="version" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca_release" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca_release" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca_release" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="action" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca_release" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="action" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca_release" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ca" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -445,37 +617,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="gdhzca" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ca" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ca" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ca_release" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1434,11 +1575,14 @@
       <workItem from="1466644395265" duration="10504000" />
       <workItem from="1466665858640" duration="461000" />
       <workItem from="1466667636515" duration="1129000" />
+      <workItem from="1466731423078" duration="2145000" />
+      <workItem from="1466740093125" duration="669000" />
+      <workItem from="1466750331765" duration="213000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="410437000" />
+    <option name="totallyTimeSpent" value="413464000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1712,13 +1856,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/version/version.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="65" selection-start-line="3" selection-start-column="65" selection-end-line="3" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/appserver/pages/x509user/x509user.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1897,26 +2034,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/action/server/X509ServerAction.java">
+    <entry file="file://$PROJECT_DIR$/src/appserver/js/x509user/x509user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="735" column="27" selection-start-line="735" selection-start-column="22" selection-end-line="735" selection-end-column="27" />
-          <folding>
-            <element signature="method#signServer#0;class#X509ServerAction#0" expanded="false" />
-            <element signature="method#parseRequest#0;class#X509ServerAction#0" expanded="false" />
-            <element signature="method#signRequest#0;class#X509ServerAction#0" expanded="false" />
-            <element signature="method#delServer#0;class#X509ServerAction#0" expanded="false" />
-            <element signature="method#revokeServer#0;class#X509ServerAction#0" expanded="false" />
-            <element signature="method#downCertificate#0;class#X509ServerAction#0" expanded="false" />
-            <element signature="method#getFilterServer#0;class#X509ServerAction#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="302">
+          <caret line="910" column="0" selection-start-line="910" selection-start-column="0" selection-end-line="910" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/appserver/js/x509server/x509server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ca/X509CaAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="318" column="63" selection-start-line="318" selection-start-column="63" selection-end-line="318" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ldap/LdapUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="78" column="22" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/utils/X509ShellUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/action/client/X509UserAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1767">
-          <caret line="447" column="48" selection-start-line="447" selection-start-column="48" selection-end-line="447" selection-end-column="48" />
+        <state relative-caret-position="1881">
+          <caret line="393" column="13" selection-start-line="393" selection-start-column="13" selection-end-line="393" selection-end-column="13" />
           <folding>
             <element signature="method#modifyUserSmartCard#0;class#X509UserAction#0" expanded="false" />
             <element signature="method#downloadUserPfxFile#0;class#X509UserAction#0" expanded="false" />
@@ -1927,8 +2083,6 @@
             <element signature="method#getUserKeyDownLoadURL#0;class#X509UserAction#0" expanded="false" />
             <element signature="method#existUser#0;class#X509UserAction#0" expanded="false" />
             <element signature="method#findUser#0;class#X509UserAction#0" expanded="false" />
-            <element signature="method#parseControls#0;class#X509UserAction#0" expanded="false" />
-            <element signature="method#getAllResultListData#0;class#X509UserAction#0" expanded="false" />
             <element signature="method#getFilterEndUser#0;class#X509UserAction#0" expanded="false" />
             <element signature="method#signX509User#0;class#X509UserAction#0" expanded="false" />
             <element signature="method#modifyUser#0;class#X509UserAction#0" expanded="false" />
@@ -1939,66 +2093,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/appserver/js/x509user/x509user.js">
+    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/action/server/X509ServerAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="910" column="0" selection-start-line="910" selection-start-column="0" selection-end-line="910" selection-end-column="0" />
-          <folding>
-            <marker date="1466489165656" expanded="true" signature="6620:6633" placeholder="..." />
-            <marker date="1466489165656" expanded="true" signature="6774:6787" placeholder="..." />
-            <marker date="1466489165656" expanded="true" signature="6926:6939" placeholder="..." />
-            <marker date="1466489165656" expanded="true" signature="7076:7089" placeholder="..." />
-            <marker date="1466489165656" expanded="true" signature="7224:7237" placeholder="..." />
-            <marker date="1466489165656" expanded="true" signature="7431:7444" placeholder="..." />
-            <marker date="1466489165656" expanded="true" signature="7581:7594" placeholder="..." />
-            <marker date="1466489165656" expanded="true" signature="7727:7740" placeholder="..." />
-          </folding>
+        <state relative-caret-position="245">
+          <caret line="740" column="57" selection-start-line="740" selection-start-column="57" selection-end-line="740" selection-end-column="57" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/appserver/js/x509server/x509server.js">
+    <entry file="file://$PROJECT_DIR$/src/version/version.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-          <folding>
-            <marker date="1466668663640" expanded="true" signature="5244:5257" placeholder="..." />
-            <marker date="1466668663640" expanded="true" signature="5398:5411" placeholder="..." />
-            <marker date="1466668663640" expanded="true" signature="5550:5563" placeholder="..." />
-            <marker date="1466668663640" expanded="true" signature="5761:5774" placeholder="..." />
-            <marker date="1466668663640" expanded="true" signature="5913:5926" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ca/X509CaAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="318" column="63" selection-start-line="318" selection-start-column="63" selection-end-line="318" selection-end-column="63" />
-          <folding>
-            <element signature="method#existCa#0;class#X509CaAction#0" expanded="false" />
-            <element signature="method#downloadCaPem#0;class#X509CaAction#0" expanded="false" />
-            <element signature="method#downloadCaIE#0;class#X509CaAction#0" expanded="false" />
-            <element signature="method#downloadCaBks#0;class#X509CaAction#0" expanded="false" />
-            <element signature="method#downloadCaJks#0;class#X509CaAction#0" expanded="false" />
-            <element signature="method#show_certificate#0;class#X509CaAction#0" expanded="false" />
-            <element signature="method#findSelf#0;class#X509CaAction#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/action/ldap/LdapUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="78" column="22" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/com/hzih/ca/web/utils/X509ShellUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="57">
+          <caret line="3" column="72" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="72" />
         </state>
       </provider>
     </entry>

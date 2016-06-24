@@ -385,12 +385,12 @@ public class X509UserAction extends ActionSupport {
                 if (controls[i] instanceof PagedResultsResponseControl) {
                     PagedResultsResponseControl prrc = (PagedResultsResponseControl) controls[i];
                     cookie = prrc.getCookie();
-                }else if(controls[i] instanceof SortResponseControl) {
+                }/*else if(controls[i] instanceof SortResponseControl) {
                     SortResponseControl src = (SortResponseControl) controls[i];
                     if (!src.isSorted()) {
                         throw src.getException();
                     }
-                }
+                }*/
             }
         }
         return (cookie == null) ? new byte[0] : cookie;
@@ -402,8 +402,8 @@ public class X509UserAction extends ActionSupport {
         int pageSize =10000;
         byte[] cookie = null;
         try {
-            context.setRequestControls(new Control[]{new PagedResultsControl(pageSize, Control.NONCRITICAL),new SortControl(sortKey,
-                    Control.CRITICAL)});
+            context.setRequestControls(new Control[]{new PagedResultsControl(pageSize, Control.NONCRITICAL)/*,new SortControl(sortKey,
+                    Control.CRITICAL)*/});
             do {
                 SearchControls sc = new SearchControls();
                 sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
