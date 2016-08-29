@@ -23,10 +23,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.struts2.ServletActionContext;
 
@@ -165,7 +162,7 @@ public class X509UserBatchImport extends ActionSupport {
             } catch (IOException e) {
                 msg = "没有找到导入文件";
                 json = "{success:false,msg:'" + msg + "'}";
-                logger.info("没有找到导入文件::" + e.getMessage(),e);
+                logger.info("没有找到导入文件::" + e.getMessage(), e);
             }
             if (workbook != null) {
                 HSSFSheet sheet = workbook.getSheetAt(0);
@@ -187,10 +184,10 @@ public class X509UserBatchImport extends ActionSupport {
                             try {
                                 en = context.search(user.getDn(), X509User.getCnAttr() + "=*", constraints);
                                 if (en.hasMore()) {
-                                    modify_msg = "Excel文件中某些用户已在在LDAP数据库,是否更新?";
+                                    modify_msg = user.getRow()+" ";
                                     if (modify_msg != null)
-                                        readMsg.append(modify_msg).append("\\n");
-                                    break;
+                                        readMsg.append(modify_msg);
+                                    continue;
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -198,6 +195,7 @@ public class X509UserBatchImport extends ActionSupport {
                             }
                         }
                         if (modify_msg != null) {
+                            readMsg.append("行记录已存在LDAP数据库,是否继续导入？重复记录将会覆盖！").append("\\n");
                             json = "{success:true,msg:'" + readMsg + "'}";
                         } else {
                             msg = "Excel文件中没有任何用户存在LDAP数据库,是否添加?";
@@ -206,7 +204,7 @@ public class X509UserBatchImport extends ActionSupport {
                         }
                     }
                 } catch (Exception e) {
-                    logger.error(e.getMessage(),e);
+                    logger.error(e.getMessage(), e);
                     logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ImportUser", "出错!" + msg);
                 } finally {
                     LdapUtils.close(context);
@@ -234,33 +232,43 @@ public class X509UserBatchImport extends ActionSupport {
             } else {
                 SearchControls constraints = new SearchControls();
                 constraints.setSearchScope(SearchControls.OBJECT_SCOPE);
+
 //                boolean modify_flag = false;
-                for (X509User user : x509UserLists) {
+                if(flag.equals("true")) {
+                    for (X509User user : x509UserLists) {
 //                    String Dn = X509User.getCnAttr() + "=" + user.getCn() + "_" + user.getIdCard() + "," + X509CaXML.getSignDn();
-                    NamingEnumeration en = null;
-                    try {
-                        en = context.search(user.getDn(), X509User.getCnAttr() + "=*", constraints);
-                        if (en.hasMore()) {
-                            if (flag.equals("true"))
-                                sign_user(SessionUtils.getAccount(request).getUserName(), context, user, true);
-                        } else {
+                        NamingEnumeration en = null;
+                        try {
+                            en = context.search(user.getDn(), X509User.getCnAttr() + "=*", constraints);
+                            if (en.hasMore()) {
+                                if (flag.equals("true"))
+                                    sign_user(SessionUtils.getAccount(request).getUserName(), context, user, true);
+                            } else {
+                                sign_user(SessionUtils.getAccount(request).getUserName(), context, user, false);
+                            }
+                        } catch (Exception e) {
+                            logger.error(e.getMessage(), e);
                             sign_user(SessionUtils.getAccount(request).getUserName(), context, user, false);
                         }
-                    } catch (Exception e) {
-                        logger.error(e.getMessage(),e);
-                        sign_user(SessionUtils.getAccount(request).getUserName(), context, user, false);
                     }
+                    this.x509UserList = null;
+                    msg = "批量导入用户完成";
+                    json = "{success:true,msg:'" + msg + "'}";
+                    logger.info("批量导入用户完成");
+                    logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ImportUser", "导入用户!");
+                }else {
+                    this.x509UserList = null;
+                    msg = "用户已取消导入！";
+                    json = "{success:true,msg:'" + msg + "'}";
+                    logger.info("用户已取消导入！");
+                    logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ImportUser", "用户已取消导入!");
                 }
-                this.x509UserList = null;
-                msg = "批量导入用户完成";
-                json = "{success:true,msg:'" + msg + "'}";
-                logger.info("批量导入用户完成");
-                logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ImportUser", "导入用户!");
+
             }
         } catch (Exception e) {
             msg = "批量导入用户失败::" + msg;
             json = "{success:false,msg:'" + msg + "'}";
-            logger.info("批量导入用户失败::" + msg,e);
+            logger.info("批量导入用户失败::" + msg, e);
             logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ImportUser", "导入用户失败!" + msg);
         } finally {
             LdapUtils.close(context);
@@ -278,25 +286,25 @@ public class X509UserBatchImport extends ActionSupport {
         String msg = null;
         String json = null;
         try {
-            String file = StringContext.systemPath+"/model/ExportUser.xls";
-            boolean flag = load(file,context);
-            if(flag){
-                msg = "导出用户数据到服务器完成"+new Date();
+            String file = StringContext.systemPath + "/model/ExportUser.xls";
+            boolean flag = load(file, context);
+            if (flag) {
+                msg = "导出用户数据到服务器完成" + new Date();
                 json = "{success:true,flag:true,msg:'" + msg + "'}";
-                logger.info("导出用户数据到服务器完成"+new Date());
+                logger.info("导出用户数据到服务器完成" + new Date());
                 logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ExportUser", "导出用户!");
-            }else {
-                msg = "导出用户数据到服务器失败"+new Date();
+            } else {
+                msg = "导出用户数据到服务器失败" + new Date();
                 json = "{success:false,flag:false,msg:'" + msg + "'}";
-                logger.info("导出用户数据到服务器失败"+new Date());
+                logger.info("导出用户数据到服务器失败" + new Date());
                 logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ExportUser", "导出用户!");
             }
-        }catch (Exception e){
-            msg = "导出用户数据到服务器失败"+new Date();
+        } catch (Exception e) {
+            msg = "导出用户数据到服务器失败" + new Date();
             json = "{success:false,flag:false,msg:'" + msg + "'}";
-            logger.info("导出用户数据到服务器失败"+new Date());
+            logger.info("导出用户数据到服务器失败" + new Date());
             logService.newLog("INFO", SessionUtils.getAccount(request).getUserName(), "ExportUser", "导出用户!");
-        }finally {
+        } finally {
             LdapUtils.close(context);
         }
         actionBase.actionEnd(response, json, result);
@@ -305,13 +313,18 @@ public class X509UserBatchImport extends ActionSupport {
 
     private String getCellValue(HSSFCell aCell) {
         if (aCell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {// 数字
-            return String.valueOf(aCell.getNumericCellValue());
+            if (HSSFDateUtil.isCellDateFormatted(aCell)) {
+                //  如果是date类型则 ，获取该cell的date值
+                return HSSFDateUtil.getJavaDate(aCell.getNumericCellValue()).toString().trim();
+            } else { // 纯数字
+                return String.valueOf(aCell.getNumericCellValue()).trim();
+            }
         } else if (aCell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN) {// Boolean
-            return String.valueOf(aCell.getBooleanCellValue());
+            return String.valueOf(aCell.getBooleanCellValue()).trim();
         } else if (aCell.getCellType() == HSSFCell.CELL_TYPE_STRING) {// 字符串
-            return aCell.getStringCellValue();
+            return aCell.getStringCellValue().trim();
         } else if (aCell.getCellType() == HSSFCell.CELL_TYPE_FORMULA) {// 公式
-            return String.valueOf(aCell.getCellFormula());
+            return String.valueOf(aCell.getCellFormula()).trim();
         } else if (aCell.getCellType() == HSSFCell.CELL_TYPE_BLANK) {// 空值
             return null;
         } else if (aCell.getCellType() == HSSFCell.CELL_TYPE_ERROR) {// 故障
@@ -323,7 +336,6 @@ public class X509UserBatchImport extends ActionSupport {
     }
 
     private List<X509User> findCount(StringBuilder readMsg, HSSFSheet sheet, int lastRowNum) throws NamingException {
-
         List<X509User> x509Users = new ArrayList<>();
         boolean isEmptyLine = false;
         for (int i = 1; i <= lastRowNum; i++) {
@@ -343,7 +355,10 @@ public class X509UserBatchImport extends ActionSupport {
                 String userEmail = null;
                 String employeeCode = null;
 
+
+
                 HSSFCell cell = row.getCell(cellNum++);
+                cell.setCellType(HSSFCell.CELL_TYPE_STRING);
 
                 boolean isNeedToAddMany = true;
                 //cn
@@ -462,6 +477,7 @@ public class X509UserBatchImport extends ActionSupport {
 
                 if (isNeedToAddMany && !isEmptyLine) {
                     X509User x509User = new X509User();
+                    x509User.setRow(i);
                     x509User.setCn(cn);
                     x509User.setIdCard(idCard);
                     x509User.setPhone(phone);
@@ -550,7 +566,7 @@ public class X509UserBatchImport extends ActionSupport {
                 ctx.modifyAttributes(x509User.getDn(), mArray);
                 return true;
             } catch (Exception e) {
-                logger.info("修改设备实体::" + x509User.getDn() + ":出现错误:" + e.getMessage(),e);
+                logger.info("修改设备实体::" + x509User.getDn() + ":出现错误:" + e.getMessage(), e);
             }/* finally {
                 LdapUtils.close(ctx);
             }*/
@@ -641,7 +657,7 @@ public class X509UserBatchImport extends ActionSupport {
             ctx.createSubcontext(dn.toString(), attr);
             return true;
         } catch (Exception e) {
-            logger.info("新增用户实体::" + x509User.getDn() + ":出现错误:" + e.getMessage(),e);
+            logger.info("新增用户实体::" + x509User.getDn() + ":出现错误:" + e.getMessage(), e);
         } /*finally {
             LdapUtils.close(ctx);
         }*/
@@ -802,22 +818,22 @@ public class X509UserBatchImport extends ActionSupport {
 
         try {
             FileOutputStream output = new FileOutputStream(file);
-            WritableWorkbook wk= Workbook.createWorkbook(output);
+            WritableWorkbook wk = Workbook.createWorkbook(output);
             // 创建工作表
             WritableSheet ws = wk.createSheet("用户信息", 0);
             //查询数据库中所有的数据
             List<SearchResult> list = getAllResultListData(context);
             //要插入到的Excel表格的行号，默认从0开始
-            Label label_cn= new Label(0, 0, "用户名");//表示第
-            Label label_idCard= new Label(1, 0, "身份证");
-            Label label_phone= new Label(2, 0, "电话");
-            Label label_address= new Label(3, 0, "地址");
-            Label label_userEmail= new Label(4, 0, "邮件");
-            Label label_employeeCode= new Label(5, 0, "警员编号");
-            Label label_province = new Label(6, 0 , "省");
-            Label label_city = new Label(7, 0 , "市");
-            Label label_organization = new Label(8, 0 , "组织");
-            Label label_institution = new Label(9, 0 , "机构");
+            Label label_cn = new Label(0, 0, "用户名");//表示第
+            Label label_idCard = new Label(1, 0, "身份证");
+            Label label_phone = new Label(2, 0, "电话");
+            Label label_address = new Label(3, 0, "地址");
+            Label label_userEmail = new Label(4, 0, "邮件");
+            Label label_employeeCode = new Label(5, 0, "警员编号");
+            Label label_province = new Label(6, 0, "省");
+            Label label_city = new Label(7, 0, "市");
+            Label label_organization = new Label(8, 0, "组织");
+            Label label_institution = new Label(9, 0, "机构");
 
             ws.addCell(label_cn);
             ws.addCell(label_idCard);
@@ -851,28 +867,28 @@ public class X509UserBatchImport extends ActionSupport {
                     x509User.setEmployeeCode((String) attr.get(X509User.getEmployeeCodeAttr()).get());
                 }
                 if (attr.get(x509User.getProvinceAttr()) != null) {
-                    x509User.setProvince((String)attr.get(x509User.getProvinceAttr()).get());
+                    x509User.setProvince((String) attr.get(x509User.getProvinceAttr()).get());
                 }
                 if (attr.get(x509User.getCityAttr()) != null) {
-                    x509User.setCity((String)attr.get(x509User.getCityAttr()).get());
+                    x509User.setCity((String) attr.get(x509User.getCityAttr()).get());
                 }
                 if (attr.get(x509User.getOrganizationAttr()) != null) {
-                    x509User.setOrganization((String)attr.get(x509User.getOrganizationAttr()).get());
+                    x509User.setOrganization((String) attr.get(x509User.getOrganizationAttr()).get());
                 }
                 if (attr.get(x509User.getInstitutionAttr()) != null) {
-                    x509User.setInstitution((String)attr.get(x509User.getInstitutionAttr()).get());
+                    x509User.setInstitution((String) attr.get(x509User.getInstitutionAttr()).get());
                 }
 
-                Label label_cn_i= new Label(0 , i+1,x509User.getCn());
-                Label label_idCard_i= new Label(1, i+1, x509User.getIdCard());
-                Label label_phone_i= new Label(2, i+1, x509User.getPhone());
-                Label label_address_i= new Label(3, i+1,x509User.getAddress());
-                Label label_userEmail_i= new Label(4, i+1, x509User.getUserEmail());
-                Label label_employeeCode_i= new Label(5, i+1, x509User.getEmployeeCode());
-                Label label_province_i= new Label(6, i+1, x509User.getProvince());
-                Label label_city_i= new Label(7, i+1, x509User.getCity());
-                Label label_organization_i= new Label(8, i+1, x509User.getOrganization());
-                Label label_institution_i= new Label(9, i+1, x509User.getInstitution());
+                Label label_cn_i = new Label(0, i + 1, x509User.getCn());
+                Label label_idCard_i = new Label(1, i + 1, x509User.getIdCard());
+                Label label_phone_i = new Label(2, i + 1, x509User.getPhone());
+                Label label_address_i = new Label(3, i + 1, x509User.getAddress());
+                Label label_userEmail_i = new Label(4, i + 1, x509User.getUserEmail());
+                Label label_employeeCode_i = new Label(5, i + 1, x509User.getEmployeeCode());
+                Label label_province_i = new Label(6, i + 1, x509User.getProvince());
+                Label label_city_i = new Label(7, i + 1, x509User.getCity());
+                Label label_organization_i = new Label(8, i + 1, x509User.getOrganization());
+                Label label_institution_i = new Label(9, i + 1, x509User.getInstitution());
 
                 ws.addCell(label_cn_i);
                 ws.addCell(label_idCard_i);

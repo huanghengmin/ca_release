@@ -138,6 +138,11 @@ Ext.onReady(function () {
                 regex: /^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})([0-9xX])$/,
                 regexText: '请输入有效的身份证号'
             }),
+            '电话号码',
+            new Ext.form.TextField({
+                id: 'tbar.select.phone',
+                name: 'phone',
+            }),
             {
                 id: 'tbar.select.info',
                 xtype: 'button',
@@ -146,7 +151,9 @@ Ext.onReady(function () {
                 handler: function () {
                     var cn = Ext.getCmp('tbar.select.cn').getValue();
                     var idCard = Ext.getCmp('tbar.select.idCard').getValue();
+                    var phone = Ext.getCmp('tbar.select.phone').getValue();
                     store.setBaseParam('cn', cn.trim());
+                    store.setBaseParam('phone', phone.trim());
                     store.setBaseParam('idCard', idCard.trim());
                     store.load({
                         params: {

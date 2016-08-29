@@ -18,6 +18,15 @@ public class X509User extends X509Ca implements Serializable {
     private String userEmail;
     private String employeeCode;
     private byte[] userCertificateAttr;
+    private int row;
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
 
     /**
      * LDAP 存放用户的公钥信息

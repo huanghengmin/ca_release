@@ -398,7 +398,7 @@ public class X509UserAction extends ActionSupport {
 
     private List<String> getAllResultListData(LdapContext context, StringBuilder stringBuilder) throws NamingException {
         List<String> resultList = new ArrayList<>();
-        String sortKey = X509User.getEmployeeCodeAttr();
+//        String sortKey = X509User.getEmployeeCodeAttr();
         int pageSize =10000;
         byte[] cookie = null;
         try {
